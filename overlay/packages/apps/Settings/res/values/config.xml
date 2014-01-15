@@ -13,4 +13,15 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Must be true to display button settings -->
     <bool name="config_device_has_button_settings" translatable="false">true</bool>
+
+    <!-- does the device have multi color led support or only
+         a fixed set of led colors -->
+    <bool name="config_has_multi_color_led" translatable="false">false</bool>
+
+    <!-- Volume Rocker Wake Support. Some devices do not support (PMU) this.
+         Setting to false will disable Volume Rocker Wake support -->
+    <bool name="config_show_volumeRockerWake">true</bool>
+
+            <!-- Whether device has hardware buttons -->
+    <bool name="config_has_hardware_buttons">true</bool>
 </resources>
