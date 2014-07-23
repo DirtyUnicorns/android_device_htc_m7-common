@@ -3,8 +3,6 @@ bin/akmd
 bin/ks
 bin/mm-qcamera-daemon
 bin/mpdecision
-bin/netmgrd
-bin/qmuxd
 bin/thermald
 
 # Configuration files
@@ -75,7 +73,7 @@ lib/libaudcal.so
 lib/libcsd-client.so
 
 # Camera
-lib/hw/vendor-camera.msm8960.so
+lib/hw/camera.vendor.msm8960.so
 lib/libBeautyChat.so
 lib/libcameraasd.so
 lib/libcameraface.so
@@ -159,11 +157,14 @@ vendor/lib/egl/libGLESv2_adreno.so
 vendor/lib/egl/libGLESv2S3D_adreno.so
 vendor/lib/egl/libq3dtools_adreno.so
 vendor/lib/libadreno_utils.so
-vendor/lib/libc2d2_a3xx.so
-vendor/lib/libc2d2_z180.so
+vendor/lib/libc2d30-a3xx.so
+vendor/lib/libc2d30.so
 vendor/lib/libC2D2.so
 vendor/lib/libgsl.so
 vendor/lib/libllvm-a3xx.so
+vendor/lib/librs_adreno_sha1.so
+vendor/lib/librs_adreno.so
+vendor/lib/libRSDriver_adreno.so
 vendor/lib/libsc-a3xx.so
 
 # Graphics firmware
@@ -206,25 +207,8 @@ etc/firmware/tzapps.b02
 etc/firmware/tzapps.b03
 etc/firmware/tzapps.mdt
 
-# Qualcomm/HTC common libs
-lib/libdiag.so
-lib/libdsi_netctrl.so
-lib/libdsutils.so
-lib/libidl.so
-lib/libqcci_legacy.so
-lib/libqdi.so
-lib/libqdp.so
-lib/libqmi.so
-lib/libqmi_cci.so
-lib/libqmi_client_qmux.so
-lib/libqmi_common_so.so
-lib/libqmi_csi.so
-lib/libqmi_encdec.so
-lib/libqmiservices.so
-
-# Radio
-lib/libnetmgr.so
-lib/libqc-opt.so
+# Qualcomm extra
+vendor/lib/libqc-opt.so
 
 # Sensors
 lib/hw/sensors.default.so
@@ -235,7 +219,7 @@ lib/libmpl.so
 lib/libmpl_jni.so
 
 # Widevine
-lib/libQSEEComAPI.so
+vendor/lib/libQSEEComAPI.so
 vendor/lib/libwvm.so
 vendor/lib/libWVStreamControlAPI_L1.so
 

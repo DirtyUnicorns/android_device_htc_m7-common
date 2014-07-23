@@ -88,7 +88,8 @@ static int check_vendor_module()
     if (gVendorModule)
         return 0;
 
-    rv = hw_get_module("vendor-camera", (const hw_module_t**)&gVendorModule);
+    rv = hw_get_module_by_class("camera", "vendor",
+            (const hw_module_t**)&gVendorModule);
     if (rv)
         ALOGE("failed to open vendor camera module");
     return rv;
@@ -123,6 +124,7 @@ static char *camera_fixup_getparams(int id, const char *settings)
     /* Disable face detection */
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
+    params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
 
     /* Advertise video HDR values */
     params.set(KEY_VIDEO_HDR_VALUES, "off,on");
@@ -209,6 +211,7 @@ static char *camera_fixup_setparams(int id, const char *settings)
     /* Disable face detection */
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
     params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
+    params.set(android::CameraParameters::KEY_FACE_DETECTION, "off");
 
     /* Enable fixed fps mode */
     params.set("preview-frame-rate-mode", "frame-rate-fixed");

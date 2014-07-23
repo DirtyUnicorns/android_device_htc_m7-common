@@ -27,16 +27,10 @@ TARGET_SCREEN_WIDTH := 1080
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    init.qcom.firmware_links.sh \
     init.qcom.rc \
     init.qcom.usb.rc \
     init.target.rc \
-    remount.qcom \
     ueventd.qcom.rc
-
-# Post boot service
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/init.post_boot.sh:system/etc/init.post_boot.sh
 
 # Recovery
 ifeq ($(TARGET_DEVICE),m7spr)
@@ -46,7 +40,7 @@ else
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/twrp.fstab:recovery/root/etc/twrp.fstab
 endif
-
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 PRODUCT_PACKAGES += \
     lpm.rc \
     charger \
@@ -73,6 +67,8 @@ PRODUCT_PACKAGES += \
 
 # Wifi config
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:/system/etc/wifi/p2p_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:/system/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/calibration:/system/etc/calibration \
     $(LOCAL_PATH)/configs/calibration_EMEA:/system/etc/calibration_EMEA
 
@@ -91,8 +87,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/AudioBTID.csv:system/etc/AudioBTID.csv \
-    $(LOCAL_PATH)/configs/AudioBTIDnew.csv:system/etc/AudioBTIDnew.csvs \
     $(LOCAL_PATH)/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3
 
 # Media
@@ -127,8 +121,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/gps.conf:system/etc/gps.conf
 
 # Keystore
-#PRODUCT_PACKAGES += \
-#    keystore.msm8960
+PRODUCT_PACKAGES += \
+    keystore.msm8960
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -159,9 +153,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
     frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
-    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
+    device/htc/m7-common/configs/com.htc.software.market.xml:system/etc/permissions/com.htc.software.market.xml
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
@@ -173,7 +167,7 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb
+    persist.sys.usb.config=mtp
 
 # Common build properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -186,9 +180,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.gps.qmienabled=true \
     ro.baseband.arch=mdm \
     ro.cam.hw.version=m7 \
+    ro.cwm.forbid_format="/firmware/mdm,/firmware/q6" \
+    ro.cwm.forbid_mount="/firmware/mdm,/firmware/q6" \
+    ro.input.noresample=1 \
     ro.opengles.version=196608 \
     ro.telephony.call_ring.multiple=false \
-    ro.telephony.call_ring.delay=3000
+    ro.telephony.call_ring.delay=3000 \
+    ro.vendor.extension_library=/system/vendor/lib/libqc-opt.so
 
 # Set build date
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
@@ -204,4 +202,4 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalv
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # Include non-opensource parts
-$(call inherit-product, vendor/htc/m7-common/m7-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/htc/m7-common/m7-common-vendor.mk)
