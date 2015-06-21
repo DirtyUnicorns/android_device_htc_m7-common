@@ -109,3 +109,20 @@ WIFI_DRIVER_FW_PATH_P2P          := "/system/etc/firmware/fw_bcm4335_p2p_b0.bin"
 
 # inherit from the proprietary version
 -include vendor/htc/m7-common/BoardConfigVendor.mk
+
+
+#TWRP config:
+DEVICE_RESOLUTION := 1080x1920
+TW_INCLUDE_DUMLOCK := true
+BOARD_HAS_NO_REAL_SDCARD := true
+RECOVERY_SDCARD_ON_DATA := true
+TW_NO_USB_STORAGE := true
+TW_INCLUDE_JB_CRYPTO := true
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "usb-otg"
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_MAX_BRIGHTNESS := 255
+TW_NO_SCREEN_BLANK := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
