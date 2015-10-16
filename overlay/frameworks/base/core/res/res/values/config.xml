@@ -273,5 +273,4 @@
 
     <!-- Boolean indicating whether we want button brightness support -->
     <bool name="config_button_brightness_support">true</bool>
-
 </resources>
